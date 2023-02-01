@@ -89,7 +89,8 @@ class Login extends StatelessWidget {
           onPressed: () {
             loginAction();
           },
-          child: Text('Login'),
+          child: Text('Přihlásit'),
+          
         
 
         ),
