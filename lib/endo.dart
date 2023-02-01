@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+//import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:simu/home_screen.dart';
 import 'package:simu/splash_screen.dart';
 import 'package:flutter/services.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:simu/test.dart';
 
 class ENDO extends StatefulWidget {
 
@@ -204,15 +207,12 @@ class InitState extends State<ENDO>{
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      "Nebo se přihlas pomocí QR kódu:",
-                      style: TextStyle(
-                        fontSize: 19,
-                        color: Color.fromARGB(255, 0, 0, 0)
-                      ),
-                    ),
+                  Wrap(
+                    spacing: 20,
+                    runSpacing: 15,
+                    children: <Widget>[
+                      scanovani(),
+                        ],
                   ),
                 ],      
               ),
@@ -264,7 +264,7 @@ class fotak extends StatelessWidget {
                 
                     ),
                     child: Icon(
-                      Icons.photo_camera,
+                      Icons.add_to_queue,
                       color: Colors.white,
                     ),
                   ),
@@ -317,12 +317,90 @@ class DialogExample extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'OK'),
+              //onPressed: () => scanQRCode(),
               child: const Text('OK'),
             ),
           ],
         );
     }
 }
+
+class scanovani extends StatelessWidget {
+  bool isVisible = false;
+  @override
+  Widget build(BuildContext context) {
+      return LayoutBuilder(builder: (context, constraint) {
+        return Container(
+          alignment: Alignment.bottomCenter,
+          width: constraint.maxWidth -10 ,
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(13),
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(0,-5),
+                blurRadius: 13,
+                spreadRadius: -7
+              ),
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context) =>  scan(title: 'scan',)));
+              },
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    height: 35,
+                    width: 90,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 225, 12, 12),
+                      shape: BoxShape.circle,
+                
+                    ),
+                    child: Icon(
+                      Icons.photo_camera,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(width: 1),
+                  Text("Načti QR kód",
+                    style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 0, 0, 0)), 
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
+    );
+  }
+}
+/*
+Future<void> scanQRCode() async {
+      final qrCode = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      );
+
+      /*if (!mounted) return;
+
+      setState(() {
+        this.qrCode = qrCode;
+      });
+    } on PlatformException {
+      qrCode = 'Failed to get platform version.';
+    }*/
+  }
+*/
+
 
 /*
 class Lectures extends StatefulWidget {
