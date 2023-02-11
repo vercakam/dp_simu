@@ -11,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class InitState extends State<LoginScreen>{
+  String value = 'token';
   @override
   Widget build(BuildContext context) {
     return initWidget();
@@ -116,7 +117,7 @@ class InitState extends State<LoginScreen>{
 
             GestureDetector(
                 onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context) =>  home_screen()
+                  Navigator.push(context,MaterialPageRoute(builder: (context) =>  home_screen(value: value)
                   ));
               },
               child: Container(

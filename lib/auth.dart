@@ -29,6 +29,8 @@ class Profile extends StatelessWidget {
   final logoutAction;
   final String? name;
   final String? picture;
+  String value = 'Screen 1 data';
+
 
   Profile({this.logoutAction, this.name, this.picture});
 
@@ -61,7 +63,7 @@ class Profile extends StatelessWidget {
         ElevatedButton(
           child: const Text('Open route'),
           onPressed: () {
-            Navigator.push(context,MaterialPageRoute(builder: (context) =>  home_screen()));
+            Navigator.push(context,MaterialPageRoute(builder: (context) =>  home_screen(value: value)));
             // Navigate to second route when tapped.
           },
         ),

@@ -6,6 +6,13 @@ import 'package:simu/splash_screen.dart';
 
 
 class home_screen extends StatelessWidget{
+  final String value;
+
+  const home_screen({
+    Key? key,
+    required this.value,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context){
     var size = MediaQuery.of(context).size;
@@ -28,11 +35,18 @@ class home_screen extends StatelessWidget{
                   SizedBox(
                     height: size.height *0.05,
                   ),
+                  
                   Text(
                     "Vyberte simulátor",
                      style: TextStyle(
                         fontSize: 30,
                         color: Colors.white),           
+                  ),
+                  Text(
+                    value,
+                    style: TextStyle(
+                        fontSize: 10,
+                        color: Color.fromARGB(255, 241, 236, 236)),
                   ),
                   SizedBox(
                     height: 90,
@@ -51,7 +65,8 @@ class home_screen extends StatelessWidget{
                       Simulator(name_sim: "URO mentor"),
                       Simulator(name_sim: "UZ mentor"),
                     ],
-                  )
+                  ),
+
                 ],      
               ),
             ),
