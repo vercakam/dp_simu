@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:simu/log_page.dart';
 import 'package:simu/login_screen.dart';
 
 
@@ -19,7 +20,7 @@ class InitState extends State<SplashScreen1> {
   }
   loginRoute() {
     Navigator.pushReplacement(this.context, MaterialPageRoute(
-      builder: (context) => LoginScreen()));
+      builder: (context) => LoginPage()));
   }
   @override
   Widget build(BuildContext context) { 

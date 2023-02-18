@@ -6,7 +6,7 @@ import 'package:simu/splash_screen.dart';
 
 
 class home_screen extends StatelessWidget{
-  final String value;
+  final String value; // tady je můj token
 
   const home_screen({
     Key? key,
@@ -42,12 +42,6 @@ class home_screen extends StatelessWidget{
                         fontSize: 30,
                         color: Colors.white),           
                   ),
-                  Text(
-                    value,
-                    style: TextStyle(
-                        fontSize: 10,
-                        color: Color.fromARGB(255, 241, 236, 236)),
-                  ),
                   SizedBox(
                     height: 90,
                   ),
@@ -55,7 +49,7 @@ class home_screen extends StatelessWidget{
                     spacing: 20,
                     runSpacing: 15,
                     children: <Widget>[
-                      Simulator_cely(name_sim: "ENDO mentor", next_page: ENDO()),
+                      Simulator_cely(name_sim: "ENDO mentor", next_page: ENDO(value: value)),
                       Simulator(name_sim: "ANGIO mentor"),
                       Simulator(name_sim: "LAP mentor"),
                       Simulator(name_sim: "PLEVIC mentor"),

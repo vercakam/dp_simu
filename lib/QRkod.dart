@@ -49,7 +49,7 @@ class _MyHomePageState extends State<scan> {
             ElevatedButton(
                     child: const Text('Připojit'),
                     onPressed: () {
-                      Navigator.push(context,MaterialPageRoute(builder: (context) =>  ENDO()));
+                      Navigator.push(context,MaterialPageRoute(builder: (context) =>  ENDO(value: 'Ahoj')));
                       // Navigate to second route when tapped.
                     },
               ),

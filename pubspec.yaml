@@ -36,6 +36,7 @@ dependencies:
   flutter_secure_storage: ^7.0.1
   flutter_inappwebview: 5.7.2+3
   qr_code_scanner:
+  jwt_decode: 0.3.1
 
 
   # The following adds the Cupertino Icons font to your application.

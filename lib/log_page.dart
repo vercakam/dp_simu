@@ -8,17 +8,17 @@ import 'dart:io' show HttpServer;
 import 'dart:convert' show jsonDecode;
 import 'package:http/http.dart' as http;
 import 'package:simu/home_screen.dart';
+import 'package:simu/log.dart';
 import 'package:simu/splash_screen.dart';
 
-
-class log_test extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  State<log_test> createState() => _MyHomePageState();
+  State<StatefulWidget> createState() => InitState();
 }
 
-class _MyHomePageState extends State<log_test> {
+class InitState extends State<LoginPage>{
+  String value = 'token';
   String _status = '';
-
   @override
   void initState() {
     super.initState();
@@ -32,6 +32,8 @@ class _MyHomePageState extends State<log_test> {
     try {
       final result = await FlutterWebAuth.authenticate(url: url, callbackUrlScheme: callbackUrlScheme);
       setState(() { _status = 'Got result: $result'; });
+      Navigator.pushReplacement(this.context, MaterialPageRoute(
+      builder: (context) => home_screen(value: result)));
     } on PlatformException catch (e) {
       setState(() { _status = 'Got error: $e'; });
     }
@@ -40,9 +42,11 @@ class _MyHomePageState extends State<log_test> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: 
-      Scaffold(
+    return initWidget();
+  }
+
+  Widget initWidget() { 
+    return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -84,26 +88,40 @@ class _MyHomePageState extends State<log_test> {
               ),
              ),
             ),
-      
-      Scaffold(
-        appBar: AppBar(
-          title: const Text('Web Auth example'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('Status: $_status\n'),
-              const SizedBox(height: 80),
-              ElevatedButton(
-                child: Text('Authenticate'),
-                onPressed: () { this.authenticate(); },
+            GestureDetector(
+                onTap: () { this.authenticate(); },
+
+              child: Container(
+                margin: EdgeInsets.only(left: 20, right: 20, top: 150),
+                alignment: Alignment.center,
+                height: 50,
+
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      (Color.fromARGB(255, 255, 0, 0)), (Color.fromARGB(255, 231, 13, 13)),
+                    ]),
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [BoxShadow(
+                    offset: Offset(0,10),
+                    blurRadius: 50,
+                    color: Color.fromARGB(255, 215, 215, 215)
+                  )],
+                ),
+                child: Text(
+                  "Přihlásit přes MUNI ID",
+                  style: TextStyle(
+                    color: Colors.white,
+                    ),
+                ),
+                
               ),
-            ],
-          ),
-        ),
-      ),
-          ],),),)
+            ),
+            Text('Status: $_status\n'),
+              const SizedBox(height: 80),
+          ]
+        )
+      )
     );
   }
 }

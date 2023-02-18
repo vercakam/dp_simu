@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simu/auth.dart';
 import 'package:simu/home_screen.dart';
+import 'package:simu/log_page.dart';
 import 'package:simu/splash_screen.dart';
 import 'package:simu/auth.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
@@ -147,7 +148,7 @@ class InitState extends State<LoginScreen>{
               ),
             ),
             GestureDetector(
-                onTap: () {Navigator.push(context,MaterialPageRoute(builder: (context) =>  log_test()));},
+                onTap: () {Navigator.push(context,MaterialPageRoute(builder: (context) =>  LoginPage()));},
 
               child: Container(
                 margin: EdgeInsets.only(left: 20, right: 20, top: 150),
