@@ -5,20 +5,16 @@ import 'package:simu/home_screen.dart';
 import 'package:simu/splash_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:simu/test.dart';
+import 'package:simu/QRkod.dart';
 
-class ENDO extends StatefulWidget {
+class ENDO extends StatelessWidget{
+  final String value; // tady je můj token
 
-  @override
-  State<StatefulWidget> createState() => InitState();
-}
+  const ENDO({
+    Key? key,
+    required this.value,
+  }) : super(key: key);
 
-class InitState extends State<ENDO>{
-  int currentStep = 0;
-  bool lekce1 = false;
-  bool lekce2 = false;
-  List<String> _list = [];
-  bool isVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -214,6 +210,7 @@ class InitState extends State<ENDO>{
                       scanovani(),
                         ],
                   ),
+                  Text(value),
                 ],      
               ),
               
