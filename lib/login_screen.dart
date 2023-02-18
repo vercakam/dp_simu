@@ -4,6 +4,7 @@ import 'package:simu/home_screen.dart';
 import 'package:simu/splash_screen.dart';
 import 'package:simu/auth.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:simu/log.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -146,10 +147,8 @@ class InitState extends State<LoginScreen>{
               ),
             ),
             GestureDetector(
-                onTap: () async {
-                  final result = await FlutterWebAuth.authenticate(url: "https://naplnmzbv.chytrak.cz/test/", callbackUrlScheme: "com.auth0.simu");
-                  //Navigator.push(context,MaterialPageRoute(builder: (context) =>  autentizace()));
-              },
+                onTap: () {Navigator.push(context,MaterialPageRoute(builder: (context) =>  log_test()));},
+
               child: Container(
                 margin: EdgeInsets.only(left: 20, right: 20, top: 150),
                 alignment: Alignment.center,
