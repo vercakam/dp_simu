@@ -49,7 +49,7 @@ class home_screen extends StatelessWidget{
                     spacing: 20,
                     runSpacing: 15,
                     children: <Widget>[
-                      Simulator_cely(name_sim: "ENDO mentor", next_page: ENDO(value: value)),
+                      Simulator_cely(name_sim: "ENDO mentor", next_page: ENDO(nehotovy_token: value)),
                       Simulator(name_sim: "ANGIO mentor"),
                       Simulator(name_sim: "LAP mentor"),
                       Simulator(name_sim: "PLEVIC mentor"),

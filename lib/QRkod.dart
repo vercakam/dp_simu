@@ -4,8 +4,10 @@ import 'package:simu/endo.dart';
 
 
 class scan extends StatefulWidget {
-  const scan({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const scan({Key? key, required this.tok}) : super(key: key);
+  final String tok;
+
+
 
   @override
   State<scan> createState() => _MyHomePageState();
@@ -29,7 +31,6 @@ class _MyHomePageState extends State<scan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
       ),
       body: Center(
         child: Column(
@@ -46,10 +47,12 @@ class _MyHomePageState extends State<scan> {
             Center(
               child: (result !=null) ? Text('${result!.code}') : Text('Scan a code'),
             ),
+            if (result != null)
             ElevatedButton(
                     child: const Text('Připojit'),
-                    onPressed: () {
-                      Navigator.push(context,MaterialPageRoute(builder: (context) =>  ENDO(value: 'Ahoj')));
+                    onPressed: () async{
+                       await show_code("https://id.simu.mu/.passport/sesame/open?resource=lap1&verification=${result!.code}&session_token=${widget.tok}"); 
+                       await Navigator.push(context,MaterialPageRoute(builder: (context) =>  ENDO(hotovy_token: widget.tok, nehotovy_token: "")));
                       // Navigate to second route when tapped.
                     },
               ),

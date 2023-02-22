@@ -6,18 +6,48 @@ import 'package:simu/splash_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:simu/QRkod.dart';
+import 'package:http/http.dart' as http;
 
-class ENDO extends StatelessWidget{
-  final String value; // tady je můj token
+Future<void> show_code(my_url) async{
+        var response = await http.post(
+        Uri.parse(my_url));
+    
+    }
+
+class ENDO extends StatefulWidget{
+  final String nehotovy_token;
+  final String? hotovy_token; // tady je můj token
+  
 
   const ENDO({
     Key? key,
-    required this.value,
+    required this.nehotovy_token,
+    this.hotovy_token,
   }) : super(key: key);
 
-
   @override
+  State<ENDO> createState() => _ENDOState();
+}
+
+class _ENDOState extends State<ENDO> {
+    String get tok => widget.hotovy_token?? widget.nehotovy_token.split(RegExp(r'='))[1];
+    TextEditingController textController = TextEditingController();
+
+
+    Future<void> postData(myULR) async {
+      var response = await http.post(
+        Uri.parse("https://id.simu.mu/.passport/sesame/prepare?resource=lap1&session_token=$tok"));
+    }
+
+
+    
+  @override
+
   Widget build(BuildContext context) {
+    
+
+
+
     return Scaffold(
       body: 
       Stack(
@@ -59,7 +89,7 @@ class ENDO extends StatelessWidget{
                     spacing: 20,
                     runSpacing: 15,
                     children: <Widget>[
-                      fotak(),
+                      fotak(tok: tok,),
                         ],
                   ),
                   SizedBox(
@@ -79,138 +109,60 @@ class ENDO extends StatelessWidget{
                     height: 20,
                   ),
                   Form(
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
                           height: 68,
-                          width: 40,
+                          width: 160,
                           child: TextFormField(
-                            onChanged: (value) {
-                              if (value.length ==1){
+                            onChanged: (val) {
+                              if (val.length ==6){
                                 FocusScope.of(context).nextFocus();
                               }
                             },
-                            onSaved: (pin1){},
-                            decoration: InputDecoration(hintText: "0"),
+                            controller: textController,
+                            decoration: InputDecoration(hintText: "000000"),
                             style: Theme.of(context).textTheme.headline6,
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
+                              LengthLimitingTextInputFormatter(6),
                               FilteringTextInputFormatter.digitsOnly,
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 68,
-                          width: 40,
-                          child: TextFormField(
-                            onChanged: (value) {
-                              if (value.length ==1){
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(hintText: "0"),
-                            style: Theme.of(context).textTheme.headline6,
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
+                          SizedBox(
+                          height: 10,
                           ),
-                        ),
-                        SizedBox(
-                          height: 68,
-                          width: 40,
-                          child: TextFormField(
-                            onChanged: (value) {
-                              if (value.length ==1){
-                                FocusScope.of(context).nextFocus();
-                              }
+                          Container(
+                          alignment: Alignment.bottomCenter,
+                          child: ElevatedButton(onPressed: () async{ 
+                            final code = textController.text;
+                            await show_code("https://id.simu.mu/.passport/sesame/open?resource=lap1&verification=$code&session_token=$tok");                            
                             },
-                            decoration: InputDecoration(hintText: "0"),
-                            style: Theme.of(context).textTheme.headline6,
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 68,
-                          width: 40,
-                          child: TextFormField(
-                            onChanged: (value) {
-                              if (value.length ==1){
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(hintText: "0"),
-                            style: Theme.of(context).textTheme.headline6,
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 68,
-                          width: 40,
-                          child: TextFormField(
-                            onChanged: (value) {
-                              if (value.length ==1){
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(hintText: "0"),
-                            style: Theme.of(context).textTheme.headline6,
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 68,
-                          width: 40,
-                          child: TextFormField(
-                            onChanged: (value) {
-                              if (value.length ==1){
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(hintText: "0"),
-                            style: Theme.of(context).textTheme.headline6,
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                          ),
-                        )
+                          child: const Text('Připojit přes kód'),  
+                      )   
+                     )
                     ],
                     )
                     ),
+
+
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
+                    SizedBox(
+                      height: 60,
+                    ),                    
                   Wrap(
                     spacing: 20,
                     runSpacing: 15,
                     children: <Widget>[
-                      scanovani(),
+                      scanovani(tok: tok),
                         ],
                   ),
-                  Text(value),
+                  //Text("https://id.simu.mu/.passport/sesame/prepare?resource=lap1&session_token=$tok"),
                 ],      
               ),
               
@@ -225,7 +177,14 @@ class ENDO extends StatelessWidget{
 
 
 class fotak extends StatelessWidget {
-  bool isVisible = false;
+  final String tok;
+
+  const fotak({
+    Key? key,
+    required this.tok
+  }) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
       return LayoutBuilder(builder: (context, constraint) {
@@ -247,9 +206,12 @@ class fotak extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) =>DialogExample()),
+              onTap: () async{
+                await show_code("https://id.simu.mu/.passport/sesame/prepare?resource=lap1&session_token=$tok");  
+                await showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) =>DialogExample());        
+              },
               child: Row(
                 children: <Widget>[
                   Container(
@@ -323,7 +285,11 @@ class DialogExample extends StatelessWidget {
 }
 
 class scanovani extends StatelessWidget {
-  bool isVisible = false;
+  const scanovani({
+    Key? key,
+    required this.tok
+  }) : super(key: key);
+  final String tok;
   @override
   Widget build(BuildContext context) {
       return LayoutBuilder(builder: (context, constraint) {
@@ -346,7 +312,7 @@ class scanovani extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context) =>  scan(title: 'scan',)));
+                Navigator.push(context,MaterialPageRoute(builder: (context) =>  scan(tok: tok)));
               },
               child: Row(
                 children: <Widget>[
@@ -364,7 +330,7 @@ class scanovani extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 1),
-                  Text("Načti QR kód",
+                  Text("Připojit přes QR kód",
                     style: TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 0, 0, 0)), 
@@ -378,113 +344,5 @@ class scanovani extends StatelessWidget {
     );
   }
 }
-/*
-Future<void> scanQRCode() async {
-      final qrCode = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        'Cancel',
-        true,
-        ScanMode.QR,
-      );
-
-      /*if (!mounted) return;
-
-      setState(() {
-        this.qrCode = qrCode;
-      });
-    } on PlatformException {
-      qrCode = 'Failed to get platform version.';
-    }*/
-  }
-*/
 
 
-/*
-class Lectures extends StatefulWidget {
-  @override
-  _LStepperState createState() => _LStepperState();
-  
-}
-class _LStepperState extends State<Lectures> {
-  @override
-  int  currentStep = 0;
-  Widget build(BuildContext context) {
-    return Container(
-        child: Stepper(
-        currentStep: this.currentStep,
-        steps: mySteps,
-        type: StepperType.vertical,
-        onStepTapped: (step) {
-          setState(() {
-            currentStep = step;
-          });
-        },
-        onStepCancel: () {
-          setState(() {
-            if (currentStep > 0) {
-              currentStep = currentStep - 1;
-            } else {
-              currentStep = 0;
-            }
-          });
-        },
-        onStepContinue: () {
-          setState(() {
-            if (currentStep < mySteps.length - 1) {
-              currentStep = currentStep + 1;
-            } else {
-              currentStep = 0;
-            }
-          });
-        },
-        controlsBuilder: (BuildContext context, ControlsDetails details) {
-            final _isLastStep = currentStep == mySteps.length - 1;
-            return Container(
-                margin: const EdgeInsets.only(top: 10),
-                child: Row(children: [
-                  if (currentStep !=  mySteps.length - 1)
-                    Expanded(
-                        child: ElevatedButton(
-                            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
-                            child: Text('Další lekce'), 
-                            onPressed: details.onStepContinue)),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                  if (currentStep != 0)
-                    Expanded(
-                        child: ElevatedButton(
-                            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 162, 152, 151))),
-                            child: Text('Minulá lekce'),
-                            onPressed: details.onStepCancel),
-                            ),
-                ]));
-          },
-      ),
-      
-      );
-  }
-  // init the step to 0th position
-  List<Step> mySteps = [
-    Step(title: Text("Lekce 1"), 
-        content: Text("ESSENTIAL BRONCHOSCOPY MODULE"), 
-        isActive: true),
-    Step(
-        title: Text("Lekce 2"),
-        content: Text("DIAGNOSTIC BRONCHOSCOPY MODULE"),
-        isActive: true
-        ),
-    Step(
-        title: Text("Lekce 3"),
-        content: Text("PEMERGENCY BRONCHOSCOPY MODULE"),
-        isActive: false),
-    Step(
-        title: Text("Lekce 4"),
-        content: Text("ESSENTIAL EBUS"),
-        isActive: false),
-    Step(title: Text("Lekce 5"), 
-        content: Text("CHEST STANDARDIZED CURRICULUM"), 
-        isActive: false),
-  ];
-  
-}*/
