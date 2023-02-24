@@ -47,8 +47,8 @@ workflows:
       app_store_connect: simu
     environment:
       ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.auth.simu
+        certificates:
+          - simu
       flutter: stable
       xcode: latest
       cocoapods: default
