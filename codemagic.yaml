@@ -47,6 +47,8 @@ workflows:
       app_store_connect: simu
     environment:
       ios_signing:
+        provisioning_profiles:
+          - simu_store
         certificates:
           - simu
       flutter: stable
