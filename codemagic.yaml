@@ -68,3 +68,8 @@ workflows:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
+    integrations:
+      app_store_connect: SIMU
+    publishing:
+      app_store_connect:
+        auth: integration 
