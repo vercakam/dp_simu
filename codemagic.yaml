@@ -31,6 +31,8 @@ workflows:
           flutter build appbundle --release \
             --build-name=1.0.$BUILD_NUMBER \
             --build-number=$BUILD_NUMBER
+      - name: Set up code signing settings on Xcode project
+        script: xcode-project use-profiles
     artifacts:
       - build/**/outputs/**/*.aab
       - build/**/outputs/**/mapping.txt
@@ -51,6 +53,7 @@ workflows:
           - simu_store
         certificates:
           - simu
+          - Distrib
       flutter: stable
       xcode: latest
       cocoapods: default
