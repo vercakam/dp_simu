@@ -75,7 +75,7 @@ class _ENDOState extends State<ENDO> {
                   Container(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      "ENDO Mentor",
+                      "LAP Mentor",
                       style: TextStyle(
                         fontSize: 25,
                         color: Colors.white
